@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             SubCategoriesTableSeeder::class,
             SousCategoriesTableSeeder::class,
+            AnnonceSeeder::class,
         ]);
 
     }
