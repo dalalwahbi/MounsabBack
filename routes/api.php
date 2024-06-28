@@ -26,5 +26,5 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
-    Route::post('/favoris', [ClientController::class, 'favoris']);
+    Route::post('/favoris', [ClientController::class, 'favoris']);  
 });
