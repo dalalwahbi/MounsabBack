@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('price');
             $table->string('accepted_at')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sub_category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sous_category_id')->nullable()->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

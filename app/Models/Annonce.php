@@ -14,9 +14,14 @@ class Annonce extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function sub_Category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Sub_Category::class);
+    }
+
+    public function sous_Category()
+    {
+        return $this->belongsTo(Sous_Category::class);
     }
 
     public function favoris()
@@ -31,6 +36,7 @@ class Annonce extends Model
         'price',
         'accepted_at',
         'user_id',
-        'category_id',
+        'sub_category_id',
+        'sous_category_id',
     ];
 }

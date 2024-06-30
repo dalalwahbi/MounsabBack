@@ -19,8 +19,9 @@ class AnnonceSeeder extends Seeder
             'image' => 'sample1.jpg',
             'price' => '100',
             'user_id' => 3,
-            'category_id' => 1, 
-            'accepted_at' => now(),
+            'sub_category_id' => 2, 
+            'sous_category_id' => 2,
+            'created_at' => now(),
         ]);
 
         Annonce::create([
@@ -29,8 +30,9 @@ class AnnonceSeeder extends Seeder
             'image' => 'sample2.jpg',
             'price' => '150',
             'user_id' => 3, 
-            'category_id' => 2, 
-            'accepted_at' => now(),
+            'sub_category_id' => 6, 
+            'sous_category_id' => 9,
+            'created_at' => now(),
         ]);
 
         Annonce::create([
@@ -38,9 +40,9 @@ class AnnonceSeeder extends Seeder
             'description' => 'Description of sample annonce 3',
             'image' => 'sample2.jpg',
             'price' => '150',
-            'user_id' => 4, 
-            'category_id' => 3, 
-            'accepted_at' => now(),
+            'user_id' => 3, 
+            'sub_category_id' => 17, 
+            'created_at' => now(),
         ]);
 
         Annonce::create([
@@ -48,8 +50,9 @@ class AnnonceSeeder extends Seeder
             'description' => 'Description of sample annonce 4',
             'image' => 'sample2.jpg',
             'price' => '150',
-            'user_id' => 4, 
-            'category_id' => 4, 
+            'user_id' => 3, 
+            'sub_category_id' => 13, 
+            'created_at' => now(),
             'accepted_at' => now(),
         ]);
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
@@ -26,5 +27,11 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
-    Route::post('/favoris', [ClientController::class, 'favoris']);  
+    Route::post('/favoris', [ClientController::class, 'favoris']);
+    Route::post('/banUsers', [AdminController::class, 'banUsers']);  
+    Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);  
+    Route::get('/getAllClients', [AdminController::class, 'getAllClients']); 
+    Route::get('/getAllReclamations', [AdminController::class, 'getAllReclamations']);
+    Route::get('/getAllAnnonces', [AdminController::class, 'getAllAnnonces']);
+
 });
