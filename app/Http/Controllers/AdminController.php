@@ -14,13 +14,12 @@ class AdminController extends Controller
 {
     public function getAllPrestataires()
     {
-        $prestataires = Prestataire::all();
+        $prestataires = Prestataire::with('user')->get();
         return response()->json($prestataires);
     }
-
     public function getAllClients()
     {
-        $clients = Client::all();
+        $clients = Client::with('user')->get();
         return response()->json($clients);
     }
 
@@ -44,6 +43,70 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Users have been banned successfully.']);
     }
+
+    public function getLatestPrestataires()
+    {
+        $latestPrestataires = Prestataire::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+        return response()->json($latestPrestataires);
+    }
+    public function getLatestClients()
+    {
+        $LatestClients = Prestataire::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+        return response()->json($LatestClients);
+    }
+
+    public function getLatestAnnonces()
+    {
+        $LatestAnnonces = Annonce::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+        return response()->json($LatestAnnonces);
+    }
+
+    public function getLatestReclamations()
+    {
+        $LatestReclamation = Reclamation::with('user')->orderBy('created_at', 'desc')->take(5)->get();
+        return response()->json($LatestReclamation);
+    }
+
+    public function countPrestataires()
+    {
+        try {
+            $count = Prestataire::count(); 
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to count prestataires'], 500);
+        }
+    }
+
+    public function countClients()
+    {
+        try {
+            $count = Client::count(); 
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to count Clients'], 500);
+        }
+    }
+
+    public function countAnnonces()
+    {
+        try {
+            $count = Annonce::count(); 
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to count annonces'], 500);
+        }
+    }
+
+    public function countReclamations()
+    {
+        try {
+            $count = Reclamation::count(); 
+            return response()->json(['count' => $count]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to count reclamation'], 500);
+        }
+    }
+
 
 
 }

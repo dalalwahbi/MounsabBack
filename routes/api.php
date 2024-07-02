@@ -28,10 +28,27 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
     Route::post('/favoris', [ClientController::class, 'favoris']);
+
+
     Route::post('/banUsers', [AdminController::class, 'banUsers']);  
     Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);  
     Route::get('/getAllClients', [AdminController::class, 'getAllClients']); 
     Route::get('/getAllReclamations', [AdminController::class, 'getAllReclamations']);
     Route::get('/getAllAnnonces', [AdminController::class, 'getAllAnnonces']);
+
+    Route::get('/getLatestPrestataires', [AdminController::class, 'getLatestPrestataires']);
+    Route::get('/getLatestClients', [AdminController::class, 'getLatestClients']);
+    Route::get('/getLatestAnnonces', [AdminController::class, 'getLatestAnnonces']);
+    Route::get('/getLatestReclamations', [AdminController::class, 'getLatestReclamations']);
+
+
+    Route::get('/countPrestataires', [AdminController::class, 'countPrestataires']);
+    Route::get('/countClients', [AdminController::class, 'countClients']);
+    Route::get('/countAnnonces', [AdminController::class, 'countAnnonces']);
+    Route::get('/countReclamations', [AdminController::class, 'countReclamations']);
+
+
+
+
 
 });
