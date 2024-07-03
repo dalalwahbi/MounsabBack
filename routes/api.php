@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PrestataireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/countClients', [AdminController::class, 'countClients']);
     Route::get('/countAnnonces', [AdminController::class, 'countAnnonces']);
     Route::get('/countReclamations', [AdminController::class, 'countReclamations']);
+
+
+
+    Route::post('/annonce/create', [PrestataireController::class, 'createAnnonce']);
 
 
 

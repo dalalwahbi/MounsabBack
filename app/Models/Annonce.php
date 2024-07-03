@@ -34,6 +34,7 @@ class Annonce extends Model
         'description',
         'image',
         'price',
+        'location',
         'accepted_at',
         'user_id',
         'sub_category_id',

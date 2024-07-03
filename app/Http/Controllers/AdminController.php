@@ -24,14 +24,13 @@ class AdminController extends Controller
     }
 
     public function getAllReclamations()
-    {
-        $reclamations = Reclamation::all();
-        return response()->json($reclamations);
-    }
-
+{
+    $reclamations = Reclamation::with('user')->paginate(9);
+    return response()->json($reclamations);
+}
     public function getAllAnnonces()
     {
-        $Annonces = Annonce::whereNull('accepted_at')->get();
+        $Annonces = Annonce::whereNull('accepted_at')->with('user')->paginate(4);
         return response()->json($Annonces);
     }
 
