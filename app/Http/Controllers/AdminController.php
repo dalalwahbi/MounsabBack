@@ -106,6 +106,49 @@ class AdminController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        try {
+            $annonce = Annonce::findOrFail($id);
+            $annonce->delete();
+
+            return response()->json(['message' => 'Annonce deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the annonce'], 500);
+        }
+    }
+
+    public function destroyReclamations($id)
+    {
+        try {
+            $reclamation = Reclamation::findOrFail($id);
+            $reclamation->delete();
+
+            return response()->json(['message' => 'Reclamation deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the Reclamation'], 500);
+        }
+    }
+
+    public function acceptAnnonce($id)
+    {
+        try {
+            $annonce = Annonce::findOrFail($id);
+            
+            if ($annonce->accepted_at !== null) {
+                return response()->json(['message' => 'Annonce already accepted'], 400);
+            }
+            
+            $annonce->accepted_at = now();
+            $annonce->save();
+
+            return response()->json(['message' => 'Annonce accepted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to accept annonce', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
 
 
 }
