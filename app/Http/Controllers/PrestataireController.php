@@ -11,7 +11,7 @@ class PrestataireController extends Controller
 {
     $user_id = Auth::guard('api')->user()->id;
 
-    $annonces = Annonce::where('user_id', $user_id)->get();
+    $annonces = Annonce::where('user_id', $user_id)->with("sub_Category")->get();
 
     // Map over the annonces to decode the 'image' field from JSON to array of strings
     $formattedAnnonces = $annonces->map(function ($annonce) {
@@ -22,9 +22,9 @@ class PrestataireController extends Controller
             'location' => $annonce->location,
             'sub_category_id' => $annonce->sub_category_id,
             'sous_category_id' => $annonce->sous_category_id,
-            'image' => json_decode($annonce->image), // Decode JSON string to array of strings
+            'image' => json_decode($annonce->image),
             'price' => $annonce->price,
-            // other fields you want to include
+            'sub_name'=>$annonce->sub_Category->name,
         ];
     });
 

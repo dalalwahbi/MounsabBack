@@ -96,12 +96,37 @@ class ClientController extends Controller
         return response()->json(['favorited' => $favoris]);
     }
 
-
     
     public function getAnnonces()
     {
-        $Annonces = Annonce::whereNotNull('accepted_at')->with('user')->paginate(6);
-        return response()->json($Annonces);
+        try {
+            $annonces = Annonce::whereNotNull('accepted_at')
+                ->with('user', 'sub_Category', 'sous_Category')
+                ->paginate(6);
+    
+            $formattedAnnonces = $annonces->map(function ($annonce) {
+                return [
+                    'id' => $annonce->id,
+                    'title' => $annonce->title,
+                    'description' => $annonce->description,
+                    'location' => $annonce->location,
+                    'sub_category_id' => $annonce->sub_category_id,
+                    'sous_category_id' => $annonce->sous_category_id,
+                    'images' => json_decode($annonce->image),
+                    'price' => $annonce->price,
+                    'sub_name' => $annonce->sub_Category->name,
+                    'firstName' => $annonce->user->firstName,
+                    'lastName' => $annonce->user->lastName,
+                    'phone' => $annonce->user->phone,
+                    'created_at' => $annonce->created_at,
+                ];
+            });
+    
+            return response()->json(['data' => $formattedAnnonces]);
+    
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
+        }
     }
 
     public function getAllAcceptedAnnonces()
@@ -109,6 +134,46 @@ class ClientController extends Controller
         $Annonces = Annonce::whereNotNull('accepted_at')->with('user')->paginate(50);
         return response()->json($Annonces);
     }
+
+    public function getAllDetails()
+    {
+        $annonces = Annonce::with(['user', 'sub_Category', 'sous_Category'])->get();
+        return response()->json($annonces);
+    }
+    
+    public function getAnnonceDetails($id)
+    {
+        try {
+            $annonce = Annonce::with(['user', 'sub_Category'])->findOrFail($id);
+    
+            $formattedAnnonce = [
+                'id' => $annonce->id,
+                'title' => $annonce->title,
+                'description' => $annonce->description,
+                'location' => $annonce->location,
+                'sub_category_id' => $annonce->sub_category_id,
+                'sous_category_id' => $annonce->sous_category_id,
+                'image' => json_decode($annonce->image),
+                'price' => $annonce->price,
+                'sub_name' => $annonce->sub_Category->name,
+                'firstName' => $annonce->user->firstName,
+                'lastName' => $annonce->user->lastName,
+                'phone' => $annonce->user->phone,
+                'created_at' => $annonce->created_at,
+                
+            ];
+    
+            return response()->json([
+                'status' => 'success',
+                'annonce' => $formattedAnnonce
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while fetching announcement details.'], 500);
+        }
+    }
+    
+    
+
 
 
   

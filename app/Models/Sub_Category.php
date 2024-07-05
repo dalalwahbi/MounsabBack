@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Sub_Category extends Model
 {
     use HasFactory;
+    protected $table = 'sub_categories';
+
 
     public function annonces()
     {

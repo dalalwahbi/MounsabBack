@@ -32,6 +32,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/favoris/check', [ClientController::class, 'check']);
     Route::get('/getAnnonces', [ClientController::class, 'getAnnonces']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);
+    Route::get('/getAllDetails', [ClientController::class, 'getAllDetails']);
+    Route::get('/getAnnonceDetails/{id}', [ClientController::class, 'getAnnonceDetails']);
 
 
 
