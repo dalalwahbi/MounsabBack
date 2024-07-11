@@ -193,6 +193,46 @@ class ClientController extends Controller
             return response()->json(['error' => 'An error occurred while fetching announcement details.'], 500);
         }
     }
+
+    public function filterAnnonces(Request $request)
+    {
+        try {
+            $category = $request->query('category');
+            $subCategory = $request->query('subCategory');
+            $sousCategory = $request->query('sousCategory');
+
+            $query = Annonce::query()
+                ->select('annonces.*', 'sub_categories.name as sub_category_name', 'categories.name as category_name')
+                ->join('sub_categories', 'annonces.sub_category_id', '=', 'sub_categories.id')
+                ->join('categories', 'sub_categories.category_id', '=', 'categories.id');
+
+            if ($category) {
+                $query->where('categories.name', $category);
+            }
+
+            if ($subCategory) {
+                $query->where('sub_categories.name', $subCategory);
+            }
+
+            if ($sousCategory) {
+                $query->where('sous_categories.name', $sousCategory);
+            }
+            $annonces = $query->get();
+            $annonces = $annonces->map(function ($annonce) {
+                return [
+                    'annonce' => $annonce,
+                    'images' => json_decode($annonce->image),
+                ];
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'annonces' => $annonces,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while fetching annonces.'], 500);
+        }
+    }
     
     
 

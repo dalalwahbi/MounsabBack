@@ -34,6 +34,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);
     Route::get('/getAllDetails', [ClientController::class, 'getAllDetails']);
     Route::get('/getAnnonceDetails/{id}', [ClientController::class, 'getAnnonceDetails']);
+    Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
 
 
 
