@@ -97,13 +97,42 @@ class ClientController extends Controller
     }
 
     
-    public function getAnnonces()
-    {
-        try {
-            $annonces = Annonce::whereNotNull('accepted_at')
-                ->with('user', 'sub_Category', 'sous_Category')
-                ->paginate(6);
-    
+        public function getAnnonces()
+        {
+            try {
+                $annonces = Annonce::whereNotNull('accepted_at')
+                    ->with('user', 'sub_Category', 'sous_Category')
+                    ->paginate(6);
+        
+                $formattedAnnonces = $annonces->map(function ($annonce) {
+                    return [
+                        'id' => $annonce->id,
+                        'title' => $annonce->title,
+                        'description' => $annonce->description,
+                        'location' => $annonce->location,
+                        'sub_category_id' => $annonce->sub_category_id,
+                        'sous_category_id' => $annonce->sous_category_id,
+                        'images' => json_decode($annonce->image),
+                        'price' => $annonce->price,
+                        'sub_name' => $annonce->sub_Category->name,
+                        'firstName' => $annonce->user->firstName,
+                        'lastName' => $annonce->user->lastName,
+                        'phone' => $annonce->user->phone,
+                        'created_at' => $annonce->created_at,
+                    ];
+                });
+        
+                return response()->json(['data' => $formattedAnnonces]);
+        
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
+            }
+        }
+
+        public function getAllAcceptedAnnonces()
+        {
+            try {
+            $annonces = Annonce::whereNotNull('accepted_at')->with('user', 'sub_Category', 'sous_Category')->paginate(50);
             $formattedAnnonces = $annonces->map(function ($annonce) {
                 return [
                     'id' => $annonce->id,
@@ -121,18 +150,11 @@ class ClientController extends Controller
                     'created_at' => $annonce->created_at,
                 ];
             });
-    
             return response()->json(['data' => $formattedAnnonces]);
-    
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch annonces', 'message' => $e->getMessage()], 500);
         }
-    }
 
-    public function getAllAcceptedAnnonces()
-    {
-        $Annonces = Annonce::whereNotNull('accepted_at')->with('user')->paginate(50);
-        return response()->json($Annonces);
     }
 
     public function getAllDetails()
