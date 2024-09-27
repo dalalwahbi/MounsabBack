@@ -25,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'addUser']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
+Route::get('/getAnnonceDetails/{id}', [ClientController::class, 'getAnnonceDetails']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/reclamation', [ClientController::class, 'reclamation']);
@@ -33,15 +35,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/getAnnonces', [ClientController::class, 'getAnnonces']);
     Route::get('/getAllAcceptedAnnonces', [ClientController::class, 'getAllAcceptedAnnonces']);
     Route::get('/getAllDetails', [ClientController::class, 'getAllDetails']);
-    Route::get('/getAnnonceDetails/{id}', [ClientController::class, 'getAnnonceDetails']);
-    Route::get('getFiltredAnnonces', [ClientController::class, 'filterAnnonces']);
 
 
 
 
-    Route::post('/banUsers', [AdminController::class, 'banUsers']);  
-    Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);  
-    Route::get('/getAllClients', [AdminController::class, 'getAllClients']); 
+    Route::post('/banUsers', [AdminController::class, 'banUsers']);
+    Route::get('/getAllPrestataires', [AdminController::class, 'getAllPrestataires']);
+    Route::get('/getAllClients', [AdminController::class, 'getAllClients']);
     Route::get('/getAllReclamations', [AdminController::class, 'getAllReclamations']);
     Route::get('/getAllAnnonces', [AdminController::class, 'getAllAnnonces']);
     Route::get('/getLatestPrestataires', [AdminController::class, 'getLatestPrestataires']);
